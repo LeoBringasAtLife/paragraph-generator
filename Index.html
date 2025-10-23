@@ -5,142 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Párrafos</title>
-    <style>
-        body {
-            font-family: 'Oxygen', sans-serif;
-            background: #fff;
-            color: #121212;
-            overflow-x: hidden;
-        }
 
-        *,
-        *::after,
-        *::before {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 16px;
-        }
+    <script type="module" src="script.js"></script>
 
-        .controls {
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 2em;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            min-width: 110px;
-        }
-
-        label {
-            font-size: 1em;
-            margin-bottom: 2px;
-        }
-
-        input[type="number"],
-        select {
-            font-size: 1em;
-            padding: 4px;
-            margin-bottom: 1em;
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 1em;
-        }
-
-        button {
-            font-size: 1em;
-            padding: 6px 16px;
-            cursor: pointer;
-            border: 1px solid #ccc;
-            background: #f2f2f2;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        button:hover,
-        button:focus {
-            background: #e0e0e0;
-            border-color: #999;
-            outline: none;
-        }
-
-        #error {
-            color: #c00;
-            min-height: 20px;
-            margin-bottom: 8px;
-        }
-
-        #stats {
-            font-size: 0.95em;
-            color: #555;
-            margin-bottom: 8px;
-        }
-
-        #output {
-            background: #f5f5f5;
-            padding: 10px;
-            min-height: 40px;
-        }
-
-        #output p {
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                max-width: 98vw;
-                margin: 12px auto;
-                padding: 8px;
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .btn-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            #output {
-                font-size: 0.98em;
-                padding: 8px 4px;
-            }
-
-            .form-group {
-                min-width: 0;
-                width: 100%;
-            }
-
-            input[type="number"],
-            select {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 
 <body>
     <main class="container">
         <form class="controls" onsubmit="return false;" aria-labelledby="formLabel">
-            <h1 id="formLabel"
-                style="font-size:1.4em; margin-bottom:8px; text-transform: capitalize; text-align: center;">
+            <h1 id="formLabel" class="title">
                 Generador de párrafos
             </h1>
-            <p style="font-size:0.95em; color:#555; margin-bottom:1em; text-align:center; text-wrap: balance;">
+            <p class="subtitle">
                 Genera párrafos de texto de ejemplo en el idioma que elijas.
-                Solo indica la cantidad y presiona <strong>Generar</strong>.
+                Solo indica la cantidad y presiona <strong>Generar.</strong>
             </p>
             <div class="form-group">
                 <label for="paragraphs">Párrafos</label>
@@ -151,6 +31,9 @@
                 <select id="lang" aria-label="Idioma">
                     <option value="es">Español</option>
                     <option value="en">Inglés</option>
+                    <option value="">Chino</option>
+                    <option value="">Arabe</option>
+                    <option value="">Rumania</option>
                 </select>
             </div>
         </form>
@@ -163,114 +46,32 @@
 
 
         <section id="outputSection" role="region" aria-labelledby="outputLabel">
-            <h2 id="outputLabel" style="font-size:1.1em; margin-bottom:6px;">Resultados:</h2>
-            <div id="error" aria-live="polite"></div>
-            <div id="stats"></div>
+            <!-- contador de caracteres y palabras -->
+            <div id="stats">
+                Palabras: 0 · Caracteres: 0
+            </div>
+
+            <div id="outputLabel" class="resultado">Resultado:</div>
+            <!-- mensaje generado (salida) -->
             <div id="output" aria-live="polite"></div>
+            <!-- mensaje de error -->
+            <div id="error" aria-live="polite" style=" margin-top: 12px;"></div>
         </section>
     </main>
 
-    <script>
-        const texts = {
-            es: [
-                "Lorem ipsum dolor sit amet.",
-                "Consectetur adipiscing elit.",
-                "Sed do eiusmod tempor incididunt.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex.",
-                "Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi.",
-                "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex. Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut lectus arcu bibendum.",
-                "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.",
-                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-            ],
-            en: [
-                "Lorem ipsum dolor sit amet.",
-                "Consectetur adipiscing elit.",
-                "Sed do eiusmod tempor incididunt.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex.",
-                "Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi.",
-                "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex. Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut lectus arcu bibendum.",
-                "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.",
-                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-            ],
-        };
+    <footer class="footer">
+        <p class="contenido-footer">
+            Desarrollado por <a href="https://instagram.com/leobringasatlife" class="enlace-persona">Leonardo
+                Bringas</a>
+        </p>
+        <!-- GitHub -->
+        <ul>
+            <li>
+                <a href="http://" target="_blank" rel="noopener noreferrer"></a>
+            </li>
+        </ul>
+    </footer>
 
-        const paragraphsInput = document.getElementById("paragraphs");
-        const langSelect = document.getElementById("lang");
-        const generateBtn = document.getElementById("generateBtn");
-        const copyBtn = document.getElementById("copyBtn");
-        const outputDiv = document.getElementById("output");
-        const errorDiv = document.getElementById("error");
-        const statsDiv = document.getElementById("stats");
-
-        // Inicialización con fallback
-        paragraphsInput.value = parseInt(localStorage.getItem("lastParagraphs"), 10) || 1;
-        langSelect.value = localStorage.getItem("lastLang") || "es";
-
-        // Sanitizar input en vivo
-        paragraphsInput.addEventListener("input", () => {
-            if (paragraphsInput.value < 1) {
-                paragraphsInput.value = 1;
-            }
-        });
-
-        generateBtn.addEventListener("click", () => {
-            const count = parseInt(paragraphsInput.value, 10);
-            const lang = langSelect.value;
-            errorDiv.textContent = "";
-            outputDiv.innerHTML = "";
-            statsDiv.textContent = "";
-
-            if (isNaN(count) || count < 1 || count > 100) {
-                errorDiv.textContent = "Por favor, ingresa un número entre 1 y 100.";
-                return;
-            }
-
-            localStorage.setItem("lastParagraphs", count);
-            localStorage.setItem("lastLang", lang);
-
-            const arr = texts[lang];
-            let totalWords = 0, totalChars = 0;
-
-            for (let i = 0; i < count; i++) {
-                const randomIndex = Math.floor(Math.random() * arr.length);
-                const paragraph = arr[randomIndex];
-
-                const article = document.createElement("article");
-                const p = document.createElement("p");
-                p.textContent = paragraph;
-                article.appendChild(p);
-                outputDiv.appendChild(article);
-
-                totalWords += paragraph.split(/\s+/).length;
-                totalChars += paragraph.length;
-            }
-
-            const formatter = new Intl.NumberFormat("es-ES");
-            statsDiv.textContent = `Palabras: ${formatter.format(totalWords)} · Caracteres: ${formatter.format(totalChars)}`;
-        });
-
-        copyBtn.addEventListener("click", () => {
-            const text = outputDiv.innerText;
-            if (text.trim().length === 0) return;
-            navigator.clipboard.writeText(text);
-            copyBtn.textContent = "Copiado";
-            setTimeout(() => {
-                copyBtn.textContent = "Copiar";
-            }, 1900);
-        });
-
-        // Enter en inputs genera
-        document.querySelectorAll('input,select').forEach(el => {
-            el.addEventListener('keydown', e => {
-                if (e.key === 'Enter') {
-                    generateBtn.click();
-                    e.preventDefault();
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
