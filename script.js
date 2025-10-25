@@ -1,24 +1,33 @@
 const texts = {
     es: [
-        "Texto en Español, sí en Español. En (ES)",
-        "Consectetur adipiscing elit.",
-        "Sed do eiusmod tempor incididunt.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex.",
-        "Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi.",
-        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex. Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut lectus arcu bibendum.",
-        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel dui vel lorem placerat fermentum.",
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+        "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.",
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+        "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+        "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.",
+        "Aliquam erat volutpat. Donec at lorem at elit tincidunt facilisis in nec mauris.",
+        "Cras maximus, sapien ut placerat commodo, justo tortor hendrerit massa, vitae luctus justo odio non augue.",
+        "Sed sed nulla vel leo dapibus convallis. Nulla facilisi. Vivamus feugiat ex at purus dictum, id sagittis eros vehicula.",
+        "Proin id libero non lorem tincidunt cursus. Donec sed mi sed justo elementum fermentum vel in purus."
     ],
+
     en: [
-        "Párrafo en Inglés, en (EN), si en Inglés.",
-        "Hola, texto escrito en Arameo. Na mentira es...",
-        "Han escrito, Rexona no te han abandonado.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velit ex.",
-        "Sin alcohol etilico, No irritante dermatologiamente probado. Pais de origen: Brasil.",
-        "Modo de empleo: Usar en la axilas. supenda si hay irritación, enrojecimiento o alguna molestia.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vitae velitas sahumerios aerosoles ex. Mauris dapibus risus quis suscipit vulputate. Egestas purus viverra accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu augue ut lectus arcu bibendum.",
-        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.",
-    ],
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nunc ut libero commodo, vitae porta turpis sodales.",
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+        "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam nisi ut aliquid ex ea commodi consequatur.",
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+        "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+        "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+        "Curabitur mattis felis quis sapien lacinia, vitae dictum magna euismod.",
+        "Aliquam erat volutpat. Integer gravida ipsum et justo hendrerit, ac faucibus felis mattis.",
+        "Morbi eget nunc vitae neque sodales iaculis. Nulla non leo sit amet libero posuere iaculis.",
+        "Donec nec justo vitae turpis vehicula posuere. Suspendisse potenti.",
+        "Cras sagittis, nunc eget tincidunt dictum, justo odio faucibus risus, non viverra eros est vel magna."
+    ]
 };
 
 const paragraphsInput = document.getElementById("paragraphs");
@@ -30,15 +39,10 @@ const errorDiv = document.getElementById("error");
 const statsDiv = document.getElementById("stats");
 
 // Inicialización con fallback
-paragraphsInput.value = parseInt(localStorage.getItem("lastParagraphs"), 10) || 1;
+paragraphsInput.value = parseInt(localStorage.getItem("lastParagraphs"), 10) || 0;
 langSelect.value = localStorage.getItem("lastLang") || "es";
 
-// Sanitizar input en vivo
-paragraphsInput.addEventListener("input", () => {
-    if (paragraphsInput.value < 1) {
-        paragraphsInput.value = 1;
-    }
-});
+
 
 generateBtn.addEventListener("click", () => {
     const count = parseInt(paragraphsInput.value, 10);
@@ -47,8 +51,8 @@ generateBtn.addEventListener("click", () => {
     outputDiv.innerHTML = "";
     statsDiv.textContent = "";
 
-    if (isNaN(count) || count < 1 || count > 100) {
-        errorDiv.textContent = "¡Por favor! Ingresa un número de entre 1 y 100.";
+    if (isNaN(count) || count < 0 || count > 1000) {
+        errorDiv.textContent = "¡Por favor! Ingresa un número de entre 1 y 1000";
         return;
     }
 

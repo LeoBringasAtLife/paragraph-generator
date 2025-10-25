@@ -9,69 +9,84 @@
     <link rel="stylesheet" href="style.css">
 
     <script type="module" src="script.js"></script>
-
 </head>
 
 <body>
+    <!-- Contenedor principal -->
     <main class="container">
+
+        <!-- Controles del formulario -->
         <form class="controls" onsubmit="return false;" aria-labelledby="formLabel">
+
+            <!-- Título -->
             <h1 id="formLabel" class="title">
                 Generador de párrafos
             </h1>
+
+            <!-- Descripción -->
             <p class="subtitle">
                 Genera párrafos de texto de ejemplo en el idioma que elijas.
-                Solo indica la cantidad y presiona <strong>Generar.</strong>
+                Solo indica la <i>cantidad e idioma</i> y apretás <strong>Generar.</strong>
             </p>
+
+            <!-- Input: cantidad de párrafos -->
             <div class="form-group">
                 <label for="paragraphs">Párrafos</label>
-                <input type="number" id="paragraphs" min="1" placeholder="Cantidad" aria-label="Cantidad de párrafos">
+                <input type="number" id="paragraphs" min="1" placeholder="Ingresa un número"
+                    aria-label="Cantidad de párrafos">
             </div>
+
+            <!-- Selector de idioma -->
             <div class="form-group">
                 <label for="lang">Idioma</label>
                 <select id="lang" aria-label="Idioma">
+                    <option value="auto">Seleccionar Idioma</option>
                     <option value="es">Español</option>
                     <option value="en">Inglés</option>
-                    <option value="">Chino</option>
-                    <option value="">Arabe</option>
-                    <option value="">Rumania</option>
                 </select>
             </div>
         </form>
 
-
+        <!-- Botones de acción -->
         <section class="btn-row" aria-label="Acciones">
             <button id="generateBtn" type="button" aria-label="Generar párrafos">Generar</button>
             <button id="copyBtn" type="button" aria-label="Copiar texto">Copiar</button>
         </section>
 
-
+        <!-- Sección de salida -->
         <section id="outputSection" role="region" aria-labelledby="outputLabel">
-            <!-- contador de caracteres y palabras -->
+            <div id="outputLabel" class="resultado">Resultado:</div>
+
+            <!-- Contador de caracteres y palabras -->
             <div id="stats">
                 Palabras: 0 · Caracteres: 0
             </div>
 
-            <div id="outputLabel" class="resultado">Resultado:</div>
-            <!-- mensaje generado (salida) -->
+            <!-- Mensaje generado (salida principal) -->
             <div id="output" aria-live="polite"></div>
-            <!-- mensaje de error -->
-            <div id="error" aria-live="polite" style=" margin-top: 12px;"></div>
+
+            <!-- Mensaje de error -->
+            <div id="error" aria-live="polite" style="margin-top: 12px;"></div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
         <p class="contenido-footer">
-            Desarrollado por <a href="https://instagram.com/leobringasatlife" class="enlace-persona">Leonardo
-                Bringas</a>
+            Desarrollado por
+            <a href="https://instagram.com/leobringasatlife" class="enlace-persona" target="_blank"
+                rel="noopener noreferrer">
+                Leonardo Bringas
+            </a>
         </p>
-        <!-- GitHub -->
+
+        <!-- Enlace a GitHub (pendiente de completar) -->
         <ul>
             <li>
                 <a href="http://" target="_blank" rel="noopener noreferrer"></a>
             </li>
         </ul>
     </footer>
-
 </body>
 
 </html>
